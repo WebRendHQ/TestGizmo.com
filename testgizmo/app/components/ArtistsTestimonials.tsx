@@ -83,24 +83,26 @@ export default function ArtistsTestimonials() {
                 {grid[rIdx]?.map((t, i) => (
                   <div
                     key={`${t.name}-${i}`}
-                    className="rounded-2xl border border-black/[.06] dark:border-white/[.10] bg-background/60 shadow-sm p-6 md:p-7 backdrop-blur-sm shrink-0 flex flex-col justify-between overflow-hidden whitespace-normal"
+                    className="rounded-2xl border border-black/[.06] dark:border-white/[.10] shadow-sm px-6 py-5 md:px-7 md:py-6 backdrop-blur supports-[backdrop-filter]:bg-background/70 bg-black/[.02] dark:bg-white/[.06] shrink-0 flex flex-col justify-between overflow-hidden whitespace-normal"
                     style={{ width: "min(90vw, 380px)" }}
                   >
                     <p
                       className="text-sm md:text-base leading-7 md:leading-8 text-foreground/90 whitespace-normal break-words"
-                      style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                      style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden", fontFamily: "var(--font-genova)" }}
                     >
                       “{t.quote}”
                     </p>
                     <div className="mt-5 flex items-center gap-3">
                       <Image
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(t.name)}`}
+                        src={`/avatars/${encodeURIComponent(t.name)}.png`}
                         alt={t.name}
                         width={32}
                         height={32}
+                        sizes="32px"
+                        quality={90}
                         className="rounded-full border border-black/[.08] dark:border-white/[.12] bg-white"
                       />
-                      <footer className="text-sm text-foreground/70 whitespace-normal">
+                      <footer className="text-sm text-foreground/70 whitespace-normal" style={{ fontFamily: "var(--font-genova)" }}>
                         <span className="font-medium">{t.name}</span> · {t.title}
                       </footer>
                     </div>

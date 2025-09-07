@@ -24,7 +24,7 @@ export default function WritingSection() {
           ].map((item, idx) => (
             <div key={idx} className="">
               <div className="text-center">
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-runner)' }}>
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm md:text-base text-foreground/80">

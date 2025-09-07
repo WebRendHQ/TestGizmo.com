@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Rajdhani } from "next/font/google";
+import { Geist, Geist_Mono, Rajdhani, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import AuthProvider from "@/app/providers/AuthProvider";
+import PageTransitionProvider, { ContentTransition } from "@/app/components/PageTransition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +21,21 @@ const runner = Rajdhani({
   variable: "--font-runner",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"]
+});
+
+const headings = Montserrat({
+  variable: "--font-headings",
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
+
+const genova = localFont({
+  variable: "--font-genova",
+  src: [
+    { path: "./fonts/genova/Genova.otf", weight: "500", style: "normal" },
+    { path: "./fonts/genova/Genova-Thin.otf", weight: "300", style: "normal" },
+  ],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -53,12 +70,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${runner.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${runner.variable} ${headings.variable} ${genova.variable} antialiased`}
       >
         <AuthProvider>
-          <Header />
-          {children}
-          <Footer />
+          <PageTransitionProvider>
+            <Header />
+            <ContentTransition>
+              {children}
+            </ContentTransition>
+            <Footer />
+          </PageTransitionProvider>
         </AuthProvider>
       </body>
     </html>

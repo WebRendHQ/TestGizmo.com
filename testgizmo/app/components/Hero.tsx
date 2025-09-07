@@ -19,15 +19,15 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-transparent" />
       <div className="relative mx-auto max-w-6xl px-4 w-full">
         <div className="text-center">
-          <p className="text-sm md:text-base uppercase tracking-widest text-foreground/60">A new AI browser</p>
+          <p className="text-sm md:text-base uppercase tracking-widest text-foreground/60">The AI add-on Blender needs</p>
           <h1 className="mt-3 text-5xl md:text-7xl font-semibold tracking-tight">
-            The AI add-on Blender needs
+            Gizmo - AI for Blender
           </h1>
           <p className="mt-4 text-lg md:text-xl text-foreground/70">
-            A writing partner, tutor, planner, and retail concierge wherever you browse.
+            AI chat that helps you model, rig, shade, and render... but faster.
           </p>
           <div className="mt-8 flex items-center justify-center">
-            <CTAButton href="#early-access" id="early-access">Get early access</CTAButton>
+            <CTAButton href="/success" id="download-now">Download Now</CTAButton>
           </div>
         </div>
       </div>

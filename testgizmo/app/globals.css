@@ -24,3 +24,27 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Local Genova fonts (place files in public/fonts/genova/) */
+@font-face {
+  font-family: "Genova";
+  src: url("/fonts/genova/Genova-Medium.woff2") format("woff2"),
+       url("/fonts/genova/Genova-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Genova";
+  src: url("/fonts/genova/Genova-Bold.woff2") format("woff2"),
+       url("/fonts/genova/Genova-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Headings prefer Genova Medium if present; sizes unchanged */
+h1, h2, h3, h4, h5, h6, .heading {
+  font-family: var(--font-genova), var(--font-headings), var(--font-runner), var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-weight: inherit;
+}
