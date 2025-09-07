@@ -18,13 +18,18 @@ export default function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link href="/pricing" className="hover:underline underline-offset-4">Pricing</Link>
+            <Link href="/features" className="hover:underline underline-offset-4">Features</Link>
+            <Link href="/enterprise" className="hover:underline underline-offset-4">Enterprise</Link>
+            <Link href="/blog" className="hover:underline underline-offset-4">AI Blog</Link>
+            <Link href="/docs" className="hover:underline underline-offset-4">Docs</Link>
+            <Link href="/careers" className="hover:underline underline-offset-4">Careers</Link>
             {user && (
               <Link href="/dashboard" className="hover:underline underline-offset-4">Dashboard</Link>
             )}
           </nav>
         </div>
 
-        {/* Right island: auth buttons (Firebase-ready ids) */}
+        {/* Right island: auth buttons */}
         <div className="flex items-center gap-2 rounded-full px-2 py-2 backdrop-blur supports-[backdrop-filter]:bg-background/70 border border-black/[.06] dark:border-white/[.10] shadow-sm">
           <AuthButtons />
         </div>

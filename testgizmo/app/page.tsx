@@ -1,17 +1,17 @@
 import Hero from "./components/Hero";
+import Features from "./components/WritingSection";
 import Students from "./components/Students";
-import Testimonials from "./components/Testimonials";
-import Privacy from "./components/Privacy";
-import WritingSection from "./components/WritingSection";
+import ArtistsTestimonials from "./components/ArtistsTestimonials";
+import TrustedBy from "./components/TrustedBy";
 
 export default function Home() {
   return (
     <main className="w-full">
       <Hero />
-      <WritingSection />
+      <TrustedBy />
+      <Features />
       <Students />
-      <Testimonials />
-      <Privacy />
+      <ArtistsTestimonials />
       <section id="early-access" className="w-full py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Bring your tabs to life</h2>

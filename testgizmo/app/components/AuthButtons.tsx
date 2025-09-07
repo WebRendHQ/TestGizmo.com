@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getFirebaseAuth } from "../lib/firebaseClient";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function AuthButtons() {
@@ -23,8 +17,9 @@ export default function AuthButtons() {
     setError(null);
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (e: any) {
-      setError(e?.message ?? "Failed to sign in with Google");
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Failed to sign in with Google";
+      setError(message);
     }
   }
 

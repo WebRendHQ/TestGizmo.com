@@ -8,7 +8,7 @@ export function getStripe() {
     if (!key) {
       throw new Error("STRIPE_SECRET_KEY is not set");
     }
-    stripeSingleton = new Stripe(key, { apiVersion: "2024-06-20" });
+    stripeSingleton = new Stripe(key);
   }
   return stripeSingleton;
 }

@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const customerId = userSnap.get("stripeCustomerId");
     if (!customerId) return NextResponse.json({ error: "no_customer" }, { status: 400 });
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-06-20" });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/dashboard`,

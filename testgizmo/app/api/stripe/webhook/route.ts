@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const stripe = getStripe();
   const db = getAdminDb();
 
-  let event;
+  let event: import("stripe").Stripe.Event;
   try {
     const rawBody = await request.text();
     event = stripe.webhooks.constructEvent(rawBody, sig as string, secret);
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
-        const session = event.data.object as any;
+        const session = event.data.object as import("stripe").Stripe.Checkout.Session;
         await db.collection("checkouts").doc(session.id).set({ status: "completed", subscriptionId: session.subscription }, { merge: true });
         if (session.customer) {
           // Optionally persist customerId to user record via metadata.uid if needed
@@ -30,10 +30,11 @@ export async function POST(request: Request) {
       case "customer.subscription.updated":
       case "customer.subscription.created":
       case "customer.subscription.deleted": {
-        const sub = event.data.object as any;
+        const sub = event.data.object as import("stripe").Stripe.Subscription;
+        const currentPeriodEndSeconds = (sub as unknown as { current_period_end?: number }).current_period_end ?? null;
         await db.collection("subscriptions").doc(sub.id).set({
           status: sub.status,
-          currentPeriodEnd: sub.current_period_end * 1000,
+          currentPeriodEnd: currentPeriodEndSeconds ? currentPeriodEndSeconds * 1000 : null,
           customer: sub.customer,
           price: sub.items?.data?.[0]?.price?.id,
         }, { merge: true });
@@ -41,10 +42,10 @@ export async function POST(request: Request) {
       }
       case "invoice.finalized":
       case "invoice.paid": {
-        const inv = event.data.object as any;
-        await db.collection("invoices").doc(inv.id).set({
+        const inv = event.data.object as import("stripe").Stripe.Invoice;
+        await db.collection("invoices").doc(String(inv.id)).set({
           total: inv.total,
-          customer: inv.customer,
+          customer: inv.customer as string | null,
           hostedInvoiceUrl: inv.hosted_invoice_url,
           created: inv.created * 1000,
           status: inv.status,

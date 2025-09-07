@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { getFirebaseAuth } from "../lib/firebaseClient";
 import {
   GoogleAuthProvider,
@@ -10,7 +11,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
-export default function SignInPage() {
+function SignInInner() {
   const search = useSearchParams();
   const initialMode = (search.get("mode") as "signin" | "signup") || "signin";
   const [mode, setMode] = useState<"signin" | "signup">(initialMode);
@@ -22,9 +23,12 @@ export default function SignInPage() {
   const router = useRouter();
   const auth = useMemo(() => getFirebaseAuth(), []);
 
+  // Wrap useSearchParams in a suspense boundary via client-only guard
   useEffect(() => {
-    const m = (search.get("mode") as "signin" | "signup") || "signin";
-    setMode(m);
+    try {
+      const m = (search.get("mode") as "signin" | "signup") || "signin";
+      setMode(m);
+    } catch {}
   }, [search]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -38,8 +42,9 @@ export default function SignInPage() {
         await signInWithEmailAndPassword(auth, email, password);
       }
       router.push("/");
-    } catch (e: any) {
-      setError(e?.message ?? "Authentication failed");
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Authentication failed";
+      setError(message);
     } finally {
       setSubmitting(false);
     }
@@ -51,8 +56,9 @@ export default function SignInPage() {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
       router.push("/");
-    } catch (e: any) {
-      setError(e?.message ?? "Failed to sign in with Google");
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Failed to sign in with Google";
+      setError(message);
     } finally {
       setSubmitting(false);
     }
@@ -126,6 +132,14 @@ export default function SignInPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<div className="w-full min-h-[60vh] flex items-center justify-center text-foreground/70">Loading…</div>}>
+      <SignInInner />
+    </Suspense>
   );
 }
 

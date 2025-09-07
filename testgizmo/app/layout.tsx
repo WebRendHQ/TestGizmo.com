@@ -22,12 +22,15 @@ const runner = Rajdhani({
 });
 
 export const metadata: Metadata = {
-  title: "Gizmo – Chat with your tabs",
+  title: "Gizmo - AI for Blender",
   description:
     "Gizmo is an AI-first browser experience: writing partner, tutor, planner, and shopping concierge in every tab.",
   metadataBase: new URL("https://testgizmo.com"),
+  icons: {
+    icon: "/logos/flavicon.png",
+  },
   openGraph: {
-    title: "Gizmo – Chat with your tabs",
+    title: "Gizmo - AI for Blender",
     description:
       "An AI partner in every tab: write faster, learn deeper, plan smarter, and shop wiser.",
     url: "https://testgizmo.com",
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gizmo – Chat with your tabs",
+    title: "Gizmo - AI for Blender",
     description:
       "An AI partner in every tab: write faster, learn deeper, plan smarter, and shop wiser.",
   },

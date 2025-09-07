@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
     if (!priceId) return NextResponse.json({ error: "missing_price" }, { status: 400 });
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-06-20" });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
     // Ensure Stripe customer id stored with user
     const userRef = db.collection("users").doc(uid);

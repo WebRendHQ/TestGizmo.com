@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getFirebaseAuth } from "../lib/firebaseClient";
 
 const MONTHLY = {
@@ -22,6 +23,7 @@ const TIERS = [
 export default function SubscriptionsPage() {
   const [loading, setLoading] = useState<string | null>(null);
   const [interval, setInterval] = useState<"month" | "year">("month");
+  const router = useRouter();
 
   const priceIds = useMemo(() => ({
     basic: {
@@ -39,8 +41,12 @@ export default function SubscriptionsPage() {
     try {
       const auth = getFirebaseAuth();
       const currentUser = auth.currentUser;
-      const idToken = currentUser ? await currentUser.getIdToken() : "";
-      const priceId = (priceIds as any)[tier]?.[interval];
+      if (!currentUser) {
+        router.push("/signin?mode=signup&next=/pricing");
+        return;
+      }
+      const idToken = await currentUser.getIdToken();
+      const priceId = (priceIds as Record<string, { month: string; year: string }>)[tier]?.[interval];
 
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
@@ -59,7 +65,11 @@ export default function SubscriptionsPage() {
     try {
       const auth = getFirebaseAuth();
       const currentUser = auth.currentUser;
-      const idToken = currentUser ? await currentUser.getIdToken() : "";
+      if (!currentUser) {
+        router.push("/signin?mode=signin&next=/pricing");
+        return;
+      }
+      const idToken = await currentUser.getIdToken();
       const res = await fetch("/api/stripe/portal", { method: "POST", headers: { Authorization: idToken ? `Bearer ${idToken}` : "" } });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -72,7 +82,7 @@ export default function SubscriptionsPage() {
     <main className="w-full py-16 md:py-20 px-4">
       <div className="mx-auto max-w-6xl">
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-center">Choose your plan</h1>
-        <p className="mt-2 text-center text-foreground/70">Simple pricing with usage-based add-ons inspired by Cursor. Monthly or yearly.</p>
+        <p className="mt-2 text-center text-foreground/70">Simple pricing with usage-based add-ons. Monthly or yearly.</p>
 
         <div className="mt-6 flex items-center justify-center gap-2 text-sm">
           <button onClick={() => setInterval("month")} className={`rounded-full px-4 py-1.5 border ${interval === "month" ? "bg-foreground text-background" : "border-black/[.12] dark:border-white/[.16]"}`}>Monthly</button>
@@ -88,7 +98,7 @@ export default function SubscriptionsPage() {
                   <span className="text-3xl font-semibold">Custom</span>
                 ) : (
                   <>
-                    <span className="text-3xl font-semibold">${interval === "month" ? (MONTHLY as any)[tier.id] : (YEARLY as any)[tier.id]}</span>
+                    <span className="text-3xl font-semibold">${interval === "month" ? (MONTHLY as Record<string, number>)[tier.id] : (YEARLY as Record<string, number>)[tier.id]}</span>
                     <span className="text-foreground/70">{interval === "month" ? "/mo" : "/yr"}</span>
                   </>
                 )}

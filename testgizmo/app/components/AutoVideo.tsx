@@ -28,8 +28,8 @@ export default function AutoVideo({ src, className }: AutoVideoProps) {
     window.addEventListener("click", onInteract, { once: true });
     window.addEventListener("touchstart", onInteract, { once: true });
     return () => {
-      window.removeEventListener("click", onInteract as any);
-      window.removeEventListener("touchstart", onInteract as any);
+      window.removeEventListener("click", onInteract);
+      window.removeEventListener("touchstart", onInteract);
     };
   }, []);
 
