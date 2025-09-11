@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import Image from "next/image";
+ 
 
 export default function ArtistsTestimonials() {
   const testimonials = [
@@ -83,7 +83,7 @@ export default function ArtistsTestimonials() {
                 {grid[rIdx]?.map((t, i) => (
                   <div
                     key={`${t.name}-${i}`}
-                    className="rounded-2xl border border-black/[.06] dark:border-white/[.10] shadow-sm px-6 py-5 md:px-7 md:py-6 backdrop-blur supports-[backdrop-filter]:bg-background/70 bg-black/[.02] dark:bg-white/[.06] shrink-0 flex flex-col justify-between overflow-hidden whitespace-normal"
+                    className="rounded-2xl border border-black/[.06] dark:border-white/[.10] px-6 py-5 md:px-7 md:py-6 backdrop-blur supports-[backdrop-filter]:bg-background/70 bg-black/[.02] dark:bg-white/[.06] shrink-0 flex flex-col justify-between overflow-hidden whitespace-normal"
                     style={{ width: "min(90vw, 380px)" }}
                   >
                     <p
@@ -92,20 +92,9 @@ export default function ArtistsTestimonials() {
                     >
                       “{t.quote}”
                     </p>
-                    <div className="mt-5 flex items-center gap-3">
-                      <Image
-                        src={`/avatars/${encodeURIComponent(t.name)}.png`}
-                        alt={t.name}
-                        width={32}
-                        height={32}
-                        sizes="32px"
-                        quality={90}
-                        className="rounded-full border border-black/[.08] dark:border-white/[.12] bg-white"
-                      />
-                      <footer className="text-sm text-foreground/70 whitespace-normal" style={{ fontFamily: "var(--font-genova)" }}>
-                        <span className="font-medium">{t.name}</span> · {t.title}
-                      </footer>
-                    </div>
+                    <footer className="mt-5 text-sm text-foreground/70 whitespace-normal" style={{ fontFamily: "var(--font-genova)" }}>
+                      <span className="font-medium">{t.name}</span> · {t.title}
+                    </footer>
                   </div>
                 ))}
               </motion.div>

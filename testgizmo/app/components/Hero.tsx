@@ -1,4 +1,4 @@
-import CTAButton from "./CTAButton";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -27,7 +27,17 @@ export default function Hero() {
             AI chat that helps you model, rig, shade, and render... but faster.
           </p>
           <div className="mt-8 flex items-center justify-center">
-            <CTAButton href="/success" id="download-now">Download Now</CTAButton>
+            <div className="inline-flex items-center gap-3 rounded-full px-3 py-2 bg-black/[.03] dark:bg-white/[.06] border border-black/[.06] dark:border-white/[.10] shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/70">
+              <a
+                id="download-now"
+                href="/downloads/gizmo.zip.txt"
+                download
+                className="inline-flex items-center rounded-full bg-foreground text-background px-5 h-10 text-sm font-medium transition-colors transition-transform duration-200 hover:bg-white hover:text-black hover:shadow-md hover:-translate-y-0.5"
+                aria-label="Download Gizmo now"
+              >
+                Download now
+              </a>
+            </div>
           </div>
         </div>
       </div>
